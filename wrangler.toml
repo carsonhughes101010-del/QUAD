@@ -1,0 +1,13 @@
+name = "marketplace-db"
+main = "worker.js"
+compatibility_date = "2024-09-01"
+
+[vars]
+PLATFORM_FEE_PERCENT = "5"
+APP_URL = "https://quad.pages.dev"
+
+# Set these as secrets via `wrangler secret put`:
+# wrangler secret put SUPABASE_URL
+# wrangler secret put SUPABASE_KEY
+# wrangler secret put STRIPE_SECRET_KEY
+# wrangler secret put STRIPE_WEBHOOK_SECRET

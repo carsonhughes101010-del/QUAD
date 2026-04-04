@@ -1,0 +1,1683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>QUAD — Campus Marketplace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800;900&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#FAFAF8;--surface:#FFFFFF;--surface-alt:#F3F2EE;
+  --ink:#1A1A17;--ink-secondary:#6B6B63;--ink-tertiary:#9C9C93;
+  --border:#E5E4DF;--border-focus:#1A1A17;
+  --accent:#E85D2A;--accent-hover:#D14E1E;--accent-light:#FFF0EB;
+  --success:#2D8A4E;--success-light:#E8F5ED;
+  --warning:#C17B1A;--warning-light:#FFF6E5;
+  --error:#C93B3B;--error-light:#FDECEC;
+  --badge-org:#2563EB;--badge-org-light:#EFF6FF;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.05);
+  --shadow-md:0 4px 12px rgba(0,0,0,.08);
+  --shadow-lg:0 12px 40px rgba(0,0,0,.12);
+  --shadow-card:0 1px 3px rgba(0,0,0,.06),0 0 0 1px rgba(0,0,0,.04);
+  --radius-sm:8px;--radius-md:12px;--radius-lg:16px;--radius-xl:24px;
+  --font-display:'Figtree',sans-serif;
+  --font-body:'DM Sans',sans-serif;
+  --nav-h:64px;--bottom-nav-h:72px;
+  --max-w:1200px;
+  --transition:all .2s cubic-bezier(.4,0,.2,1);
+}
+html{font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{font-family:var(--font-body);background:var(--bg);color:var(--ink);min-height:100dvh;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;font-size:inherit}
+input,textarea,select{font-family:inherit;font-size:inherit;border:none;outline:none;background:none}
+img{display:block;max-width:100%}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--ink-tertiary)}
+
+/* ─── TYPOGRAPHY ─── */
+h1,h2,h3,h4,h5,h6{font-family:var(--font-display);font-weight:700;line-height:1.15;letter-spacing:-.02em}
+h1{font-size:clamp(2rem,5vw,3rem)}
+h2{font-size:clamp(1.5rem,3.5vw,2rem)}
+h3{font-size:clamp(1.125rem,2.5vw,1.375rem)}
+p{line-height:1.6}
+
+/* ─── BUTTONS ─── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:var(--radius-sm);font-weight:600;font-family:var(--font-display);transition:var(--transition);white-space:nowrap;font-size:.9375rem;letter-spacing:-.01em}
+.btn-primary{background:var(--ink);color:var(--bg);}.btn-primary:hover{background:#333;transform:translateY(-1px);box-shadow:var(--shadow-md)}
+.btn-accent{background:var(--accent);color:#fff}.btn-accent:hover{background:var(--accent-hover);transform:translateY(-1px);box-shadow:var(--shadow-md)}
+.btn-outline{border:1.5px solid var(--border);color:var(--ink);background:var(--surface)}.btn-outline:hover{border-color:var(--ink);background:var(--surface-alt)}
+.btn-ghost{color:var(--ink-secondary)}.btn-ghost:hover{background:var(--surface-alt);color:var(--ink)}
+.btn-sm{padding:8px 16px;font-size:.8125rem;border-radius:6px}
+.btn-lg{padding:16px 32px;font-size:1.0625rem}
+.btn-icon{width:40px;height:40px;padding:0;border-radius:var(--radius-sm);display:inline-flex;align-items:center;justify-content:center}
+.btn-icon:hover{background:var(--surface-alt)}
+.btn:disabled{opacity:.5;pointer-events:none}
+.btn .spinner{width:18px;height:18px;border:2px solid transparent;border-top-color:currentColor;border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ─── INPUTS ─── */
+.input-group{display:flex;flex-direction:column;gap:6px}
+.input-group label{font-size:.8125rem;font-weight:600;font-family:var(--font-display);color:var(--ink-secondary)}
+.input{padding:12px 16px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:.9375rem;transition:var(--transition);background:var(--surface);width:100%}
+.input:focus{border-color:var(--border-focus);box-shadow:0 0 0 3px rgba(26,26,23,.08)}
+.input::placeholder{color:var(--ink-tertiary)}
+textarea.input{resize:vertical;min-height:100px}
+select.input{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236B6B63'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px}
+
+/* ─── BADGES ─── */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:100px;font-size:.75rem;font-weight:600;font-family:var(--font-display)}
+.badge-accent{background:var(--accent-light);color:var(--accent)}
+.badge-success{background:var(--success-light);color:var(--success)}
+.badge-warning{background:var(--warning-light);color:var(--warning)}
+.badge-org{background:var(--badge-org-light);color:var(--badge-org)}
+.badge-free{background:#F0FDF4;color:#16A34A}
+
+/* ─── CHIP ─── */
+.chip{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:100px;font-size:.8125rem;font-weight:500;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;transition:var(--transition);font-family:var(--font-display)}
+.chip:hover,.chip.active{border-color:var(--ink);background:var(--ink);color:#fff}
+.chip.active:hover{background:#333}
+
+/* ─── CARDS ─── */
+.card{background:var(--surface);border-radius:var(--radius-md);box-shadow:var(--shadow-card);overflow:hidden;transition:var(--transition)}
+.card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.card-img{aspect-ratio:1;object-fit:cover;width:100%;background:var(--surface-alt)}
+.card-body{padding:14px 16px 16px}
+.card-price{font-family:var(--font-display);font-weight:800;font-size:1.125rem;color:var(--ink)}
+.card-title{font-size:.875rem;font-weight:500;color:var(--ink);margin-top:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-meta{display:flex;align-items:center;gap:6px;margin-top:8px;font-size:.75rem;color:var(--ink-tertiary)}
+
+/* ─── LAYOUT ─── */
+.container{width:100%;max-width:var(--max-w);margin:0 auto;padding:0 20px}
+.view{display:none;min-height:calc(100dvh - var(--nav-h));padding-bottom:calc(var(--bottom-nav-h) + 20px);animation:fadeUp .35s ease}
+.view.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes scaleIn{from{transform:scale(.95);opacity:0}to{transform:scale(1);opacity:1}}
+
+/* ─── TOP NAV ─── */
+.topnav{position:sticky;top:0;z-index:100;background:rgba(250,250,248,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);height:var(--nav-h);display:flex;align-items:center}
+.topnav .container{display:flex;align-items:center;justify-content:space-between}
+.topnav-brand{font-family:var(--font-display);font-weight:900;font-size:1.375rem;letter-spacing:-.04em;display:flex;align-items:center;gap:8px;cursor:pointer}
+.topnav-brand .quad-mark{width:28px;height:28px;background:var(--ink);border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.75rem;font-weight:900;letter-spacing:0}
+.topnav-actions{display:flex;align-items:center;gap:4px}
+.topnav-search{display:none;align-items:center;gap:8px;padding:8px 16px;background:var(--surface-alt);border-radius:100px;width:320px;border:1.5px solid transparent;transition:var(--transition)}
+.topnav-search:focus-within{background:var(--surface);border-color:var(--border-focus);box-shadow:0 0 0 3px rgba(26,26,23,.06)}
+.topnav-search svg{color:var(--ink-tertiary);flex-shrink:0}
+.topnav-search input{flex:1;font-size:.875rem}
+@media(min-width:768px){.topnav-search{display:flex}}
+.topnav-avatar{width:34px;height:34px;border-radius:50%;background:var(--surface-alt);border:2px solid var(--border);overflow:hidden;cursor:pointer;transition:var(--transition)}
+.topnav-avatar:hover{border-color:var(--ink)}
+.topnav-avatar img{width:100%;height:100%;object-fit:cover}
+
+/* ─── BOTTOM NAV ─── */
+.bottomnav{position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);height:var(--bottom-nav-h);padding-bottom:env(safe-area-inset-bottom);display:flex;align-items:center;justify-content:space-around}
+.bottomnav-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 16px;color:var(--ink-tertiary);transition:var(--transition);border-radius:var(--radius-sm);-webkit-tap-highlight-color:transparent;cursor:pointer}
+.bottomnav-item svg{width:22px;height:22px;transition:var(--transition)}
+.bottomnav-item span{font-size:.6875rem;font-weight:600;font-family:var(--font-display)}
+.bottomnav-item.active{color:var(--accent)}
+.bottomnav-item.active svg{transform:scale(1.1)}
+.bottomnav-post{position:relative;margin-top:-20px}
+.bottomnav-post .post-btn{width:48px;height:48px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(232,93,42,.35);transition:var(--transition)}
+.bottomnav-post .post-btn:hover{transform:scale(1.08);box-shadow:0 6px 20px rgba(232,93,42,.45)}
+.bottomnav-post span{margin-top:4px;font-size:.6875rem;font-weight:600;font-family:var(--font-display);color:var(--ink-tertiary)}
+@media(min-width:768px){.bottomnav{display:none}}
+
+/* ─── DESKTOP NAV LINKS ─── */
+.topnav-links{display:none;align-items:center;gap:4px}
+.topnav-links a{padding:8px 14px;font-size:.875rem;font-weight:500;color:var(--ink-secondary);border-radius:var(--radius-sm);transition:var(--transition)}
+.topnav-links a:hover{background:var(--surface-alt);color:var(--ink)}
+.topnav-links a.active{color:var(--accent);font-weight:600}
+@media(min-width:768px){.topnav-links{display:flex}}
+
+/* ─── AUTH VIEW ─── */
+.auth-view{display:flex;align-items:center;justify-content:center;min-height:100dvh;padding:20px;background:var(--bg)}
+.auth-card{width:100%;max-width:420px;animation:scaleIn .4s ease}
+.auth-header{text-align:center;margin-bottom:36px}
+.auth-header .quad-logo{font-family:var(--font-display);font-weight:900;font-size:2.5rem;letter-spacing:-.06em;margin-bottom:4px}
+.auth-header .quad-logo span{color:var(--accent)}
+.auth-header p{color:var(--ink-secondary);font-size:.9375rem}
+.auth-form{display:flex;flex-direction:column;gap:16px}
+.auth-divider{display:flex;align-items:center;gap:16px;color:var(--ink-tertiary);font-size:.8125rem;margin:4px 0}
+.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.google-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:13px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-weight:600;font-family:var(--font-display);font-size:.9375rem;background:var(--surface);transition:var(--transition)}
+.google-btn:hover{border-color:var(--ink);background:var(--surface-alt)}
+.google-btn svg{width:20px;height:20px}
+.auth-footer{text-align:center;margin-top:20px;font-size:.8125rem;color:var(--ink-tertiary)}
+.auth-footer a{color:var(--accent);font-weight:600}
+.edu-notice{display:flex;align-items:flex-start;gap:10px;padding:14px;background:var(--accent-light);border-radius:var(--radius-sm);font-size:.8125rem;color:var(--accent);line-height:1.5}
+.edu-notice svg{flex-shrink:0;margin-top:1px}
+
+/* ─── HOME / BROWSE ─── */
+.home-hero{padding:32px 0 24px;text-align:center}
+.home-hero h1{margin-bottom:8px}
+.home-hero h1 span{color:var(--accent)}
+.home-hero p{color:var(--ink-secondary);font-size:1.0625rem;max-width:500px;margin:0 auto}
+.mobile-search{display:flex;align-items:center;gap:8px;padding:12px 16px;background:var(--surface);border-radius:var(--radius-lg);margin-bottom:20px;box-shadow:var(--shadow-card);border:1.5px solid var(--border)}
+.mobile-search svg{color:var(--ink-tertiary);flex-shrink:0}
+.mobile-search input{flex:1;font-size:.9375rem}
+@media(min-width:768px){.mobile-search{display:none}}
+.categories-row{display:flex;gap:8px;overflow-x:auto;padding:0 0 16px;scrollbar-width:none;-ms-overflow-style:none}
+.categories-row::-webkit-scrollbar{display:none}
+.listings-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.listings-header h3{font-size:1.0625rem}
+.listings-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media(min-width:640px){.listings-grid{grid-template-columns:repeat(3,1fr);gap:16px}}
+@media(min-width:960px){.listings-grid{grid-template-columns:repeat(4,1fr);gap:20px}}
+.listing-link{cursor:pointer}
+.listing-link .card-img{position:relative}
+.listing-link .card-img img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.listing-condition{position:absolute;top:8px;left:8px}
+.listing-save{position:absolute;top:8px;right:8px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.85);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:var(--transition)}
+.listing-save:hover{background:#fff;transform:scale(1.1)}
+.listing-save.saved svg{fill:var(--accent);color:var(--accent)}
+
+/* ─── LISTING DETAIL ─── */
+.detail-back{display:inline-flex;align-items:center;gap:6px;padding:12px 0;color:var(--ink-secondary);font-size:.875rem;font-weight:500;cursor:pointer;transition:var(--transition)}
+.detail-back:hover{color:var(--ink)}
+.detail-grid{display:grid;grid-template-columns:1fr;gap:24px;padding-bottom:40px}
+@media(min-width:768px){.detail-grid{grid-template-columns:1fr 380px}}
+.detail-gallery{border-radius:var(--radius-lg);overflow:hidden;aspect-ratio:1;background:var(--surface-alt);position:relative}
+.detail-gallery img{width:100%;height:100%;object-fit:cover}
+.detail-info{display:flex;flex-direction:column;gap:20px}
+.detail-price{font-family:var(--font-display);font-weight:800;font-size:2rem;letter-spacing:-.03em}
+.detail-title{font-size:1.25rem;font-weight:600;line-height:1.35}
+.detail-seller{display:flex;align-items:center;gap:12px;padding:16px;background:var(--surface-alt);border-radius:var(--radius-md)}
+.detail-seller-avatar{width:44px;height:44px;border-radius:50%;background:var(--border);overflow:hidden;flex-shrink:0}
+.detail-seller-avatar img{width:100%;height:100%;object-fit:cover}
+.detail-seller-info{flex:1}
+.detail-seller-name{font-weight:600;font-family:var(--font-display);font-size:.9375rem}
+.detail-seller-school{font-size:.8125rem;color:var(--ink-secondary)}
+.detail-actions{display:flex;flex-direction:column;gap:10px}
+.detail-meta{display:flex;flex-direction:column;gap:12px;padding-top:16px;border-top:1px solid var(--border)}
+.detail-meta-row{display:flex;align-items:center;gap:8px;font-size:.875rem;color:var(--ink-secondary)}
+.detail-meta-row svg{width:18px;height:18px;color:var(--ink-tertiary)}
+.detail-description{line-height:1.7;color:var(--ink-secondary);font-size:.9375rem}
+
+/* ─── POST LISTING ─── */
+.post-view .container{max-width:640px;padding-top:24px}
+.post-header{margin-bottom:28px}
+.post-header h2{margin-bottom:4px}
+.post-header p{color:var(--ink-secondary);font-size:.9375rem}
+.post-form{display:flex;flex-direction:column;gap:20px;padding-bottom:40px}
+.photo-upload{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.photo-upload-slot{aspect-ratio:1;border:2px dashed var(--border);border-radius:var(--radius-md);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;transition:var(--transition);color:var(--ink-tertiary);font-size:.75rem;font-weight:500;position:relative;overflow:hidden}
+.photo-upload-slot:hover{border-color:var(--ink);color:var(--ink)}
+.photo-upload-slot.filled{border-style:solid;border-color:var(--border)}
+.photo-upload-slot.filled img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.photo-upload-slot .remove-photo{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;transition:var(--transition)}
+.photo-upload-slot:hover .remove-photo{opacity:1}
+.price-input{display:flex;align-items:center;gap:0;border:1.5px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;transition:var(--transition)}
+.price-input:focus-within{border-color:var(--border-focus);box-shadow:0 0 0 3px rgba(26,26,23,.08)}
+.price-input .currency{padding:12px 14px;background:var(--surface-alt);font-weight:600;color:var(--ink-secondary);border-right:1px solid var(--border)}
+.price-input input{flex:1;padding:12px 14px;font-size:1.125rem;font-weight:600;font-family:var(--font-display)}
+.condition-pills{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ─── PROFILE ─── */
+.profile-view .container{max-width:640px;padding-top:24px}
+.profile-card{display:flex;flex-direction:column;align-items:center;text-align:center;padding:32px 20px;background:var(--surface);border-radius:var(--radius-lg);box-shadow:var(--shadow-card);margin-bottom:24px}
+.profile-avatar{width:88px;height:88px;border-radius:50%;background:var(--surface-alt);border:3px solid var(--border);overflow:hidden;margin-bottom:16px}
+.profile-avatar img{width:100%;height:100%;object-fit:cover}
+.profile-name{font-family:var(--font-display);font-weight:700;font-size:1.375rem;margin-bottom:4px}
+.profile-school{color:var(--ink-secondary);font-size:.875rem;margin-bottom:16px}
+.profile-stats{display:flex;gap:32px}
+.profile-stat{text-align:center}
+.profile-stat-num{font-family:var(--font-display);font-weight:800;font-size:1.375rem}
+.profile-stat-label{font-size:.75rem;color:var(--ink-tertiary);margin-top:2px}
+.profile-tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--surface-alt);padding:4px;border-radius:var(--radius-sm)}
+.profile-tab{flex:1;padding:10px;text-align:center;font-size:.8125rem;font-weight:600;font-family:var(--font-display);border-radius:6px;cursor:pointer;transition:var(--transition);color:var(--ink-secondary)}
+.profile-tab.active{background:var(--surface);box-shadow:var(--shadow-sm);color:var(--ink)}
+.profile-section{margin-bottom:24px}
+.profile-section h3{font-size:1rem;margin-bottom:12px}
+
+/* ─── MESSAGES ─── */
+.messages-view .container{max-width:700px;padding-top:16px}
+.msg-list{display:flex;flex-direction:column;gap:2px}
+.msg-thread{display:flex;align-items:center;gap:14px;padding:16px;border-radius:var(--radius-md);cursor:pointer;transition:var(--transition)}
+.msg-thread:hover{background:var(--surface)}
+.msg-thread-avatar{width:48px;height:48px;border-radius:50%;background:var(--surface-alt);overflow:hidden;flex-shrink:0;border:2px solid var(--border)}
+.msg-thread-avatar img{width:100%;height:100%;object-fit:cover}
+.msg-thread-info{flex:1;min-width:0}
+.msg-thread-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.msg-thread-name{font-weight:600;font-family:var(--font-display);font-size:.9375rem}
+.msg-thread-time{font-size:.75rem;color:var(--ink-tertiary);white-space:nowrap}
+.msg-thread-preview{font-size:.8125rem;color:var(--ink-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.msg-thread-item{font-size:.75rem;color:var(--ink-tertiary);margin-top:2px}
+.msg-unread{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.chat-view{display:none;flex-direction:column;height:calc(100dvh - var(--nav-h))}
+.chat-header{display:flex;align-items:center;gap:12px;padding:12px 20px;border-bottom:1px solid var(--border)}
+.chat-header .back-btn{cursor:pointer}
+.chat-messages{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:8px}
+.chat-bubble{max-width:75%;padding:12px 16px;border-radius:16px;font-size:.9375rem;line-height:1.5;animation:scaleIn .2s ease}
+.chat-bubble.sent{align-self:flex-end;background:var(--ink);color:#fff;border-bottom-right-radius:4px}
+.chat-bubble.received{align-self:flex-start;background:var(--surface);box-shadow:var(--shadow-card);border-bottom-left-radius:4px}
+.chat-bubble .time{font-size:.6875rem;opacity:.6;margin-top:4px}
+.chat-offer{padding:16px;background:var(--accent-light);border-radius:var(--radius-md);border:1.5px solid var(--accent);margin:8px 0}
+.chat-offer-label{font-size:.75rem;font-weight:600;color:var(--accent);font-family:var(--font-display);margin-bottom:4px}
+.chat-offer-amount{font-family:var(--font-display);font-weight:800;font-size:1.25rem}
+.chat-offer-actions{display:flex;gap:8px;margin-top:12px}
+.chat-input-bar{display:flex;align-items:center;gap:8px;padding:12px 20px;border-top:1px solid var(--border);background:var(--surface)}
+.chat-input-bar input{flex:1;padding:10px 16px;background:var(--surface-alt);border-radius:100px;font-size:.9375rem}
+.chat-send{width:40px;height:40px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;transition:var(--transition)}
+.chat-send:hover{background:var(--accent-hover);transform:scale(1.05)}
+
+/* ─── ORG STOREFRONT ─── */
+.org-hero{padding:32px 0;display:flex;align-items:center;gap:20px}
+.org-logo{width:72px;height:72px;border-radius:var(--radius-md);background:var(--surface-alt);overflow:hidden;flex-shrink:0;box-shadow:var(--shadow-card)}
+.org-logo img{width:100%;height:100%;object-fit:cover}
+.org-info h2{margin-bottom:4px}
+.org-info p{color:var(--ink-secondary);font-size:.9375rem}
+.org-tabs{display:flex;gap:8px;margin-bottom:24px}
+
+/* ─── MODAL ─── */
+.modal-overlay{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.4);backdrop-filter:blur(4px);display:none;align-items:flex-end;justify-content:center;animation:fadeIn .2s ease}
+.modal-overlay.active{display:flex}
+@media(min-width:640px){.modal-overlay.active{align-items:center;padding:20px}}
+.modal{width:100%;max-width:480px;max-height:85dvh;background:var(--surface);border-radius:var(--radius-xl) var(--radius-xl) 0 0;padding:24px;overflow-y:auto;animation:slideUp .3s ease}
+@media(min-width:640px){.modal{border-radius:var(--radius-xl);animation:scaleIn .3s ease}}
+.modal-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 20px}
+.modal h3{margin-bottom:16px}
+
+/* ─── TOAST ─── */
+.toast-container{position:fixed;top:80px;right:20px;z-index:300;display:flex;flex-direction:column;gap:8px}
+.toast{padding:14px 20px;background:var(--ink);color:#fff;border-radius:var(--radius-sm);font-size:.875rem;font-weight:500;box-shadow:var(--shadow-lg);animation:scaleIn .3s ease;display:flex;align-items:center;gap:10px;max-width:360px}
+.toast.success{background:var(--success)}
+.toast.error{background:var(--error)}
+
+/* ─── EMPTY STATE ─── */
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 20px;color:var(--ink-tertiary)}
+.empty-state svg{width:64px;height:64px;margin-bottom:16px;opacity:.4}
+.empty-state h3{color:var(--ink-secondary);margin-bottom:4px}
+.empty-state p{font-size:.875rem;max-width:280px}
+
+/* ─── SKELETON ─── */
+.skeleton{background:linear-gradient(90deg,var(--surface-alt) 25%,var(--border) 50%,var(--surface-alt) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:var(--radius-sm)}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* ─── QR CODE ─── */
+.qr-container{display:flex;flex-direction:column;align-items:center;gap:16px;padding:24px}
+.qr-code{width:200px;height:200px;border:8px solid var(--ink);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;background:#fff}
+
+/* ─── MISC ─── */
+.divider{height:1px;background:var(--border);margin:8px 0}
+.pill-row{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:4px 0}
+.pill-row::-webkit-scrollbar{display:none}
+.text-accent{color:var(--accent)}
+.text-secondary{color:var(--ink-secondary)}
+.text-sm{font-size:.8125rem}
+.text-xs{font-size:.75rem}
+.mt-auto{margin-top:auto}
+.gap-8{gap:8px}
+.gap-12{gap:12px}
+.flex{display:flex}
+.flex-col{flex-direction:column}
+.items-center{align-items:center}
+.justify-between{justify-content:space-between}
+.w-full{width:100%}
+
+/* ─── PAGE-SPECIFIC OVERRIDES ─── */
+@media(max-width:767px){
+  .detail-grid{gap:16px}
+  .detail-price{font-size:1.625rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ AUTH VIEW ═══════════════════ -->
+<div id="auth-view" class="auth-view">
+  <div class="auth-card">
+    <div class="auth-header">
+      <div class="quad-logo">[<span>QUAD</span>]</div>
+      <p>Your campus marketplace</p>
+    </div>
+
+    <div id="auth-signup" class="auth-form">
+      <div class="edu-notice">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"/></svg>
+        <span>Only .edu email addresses are allowed. Your school is auto&#8209;detected from your email domain.</span>
+      </div>
+
+      <button class="google-btn" onclick="googleSignIn()">
+        <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Sign in with Google
+      </button>
+
+      <div class="auth-divider">or continue with email</div>
+
+      <div class="input-group">
+        <label>Full Name</label>
+        <input class="input" type="text" id="signup-name" placeholder="Your name">
+      </div>
+      <div class="input-group">
+        <label>Email Address</label>
+        <input class="input" type="email" id="signup-email" placeholder="you@university.edu">
+      </div>
+      <div class="input-group">
+        <label>Password</label>
+        <input class="input" type="password" id="signup-password" placeholder="At least 8 characters">
+      </div>
+      <div class="input-group">
+        <label>Graduation Year</label>
+        <select class="input" id="signup-year">
+          <option value="">Select year</option>
+          <option>2025</option><option>2026</option><option>2027</option><option>2028</option><option>2029</option>
+        </select>
+      </div>
+      <button class="btn btn-primary btn-lg w-full" onclick="emailSignUp()">Create Account</button>
+      <p class="auth-footer">Already have an account? <a href="#" onclick="showLogin()">Sign in</a></p>
+    </div>
+
+    <div id="auth-login" class="auth-form" style="display:none">
+      <button class="google-btn" onclick="googleSignIn()">
+        <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Sign in with Google
+      </button>
+      <div class="auth-divider">or</div>
+      <div class="input-group">
+        <label>Email Address</label>
+        <input class="input" type="email" id="login-email" placeholder="you@university.edu">
+      </div>
+      <div class="input-group">
+        <label>Password</label>
+        <input class="input" type="password" id="login-password" placeholder="Your password">
+      </div>
+      <button class="btn btn-primary btn-lg w-full" onclick="emailLogin()">Sign In</button>
+      <p class="auth-footer">New to QUAD? <a href="#" onclick="showSignup()">Create account</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ TOP NAV ═══════════════════ -->
+<nav class="topnav" id="topnav" style="display:none">
+  <div class="container">
+    <div class="topnav-brand" onclick="navigate('home')">
+      <div class="quad-mark">Q</div>
+      QUAD
+    </div>
+    <div class="topnav-search">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" placeholder="Search listings…" id="desktop-search" onkeydown="if(event.key==='Enter')searchListings(this.value)">
+    </div>
+    <div class="topnav-links">
+      <a href="#" data-view="home" onclick="navigate('home')">Browse</a>
+      <a href="#" data-view="post" onclick="navigate('post')">Sell</a>
+      <a href="#" data-view="messages" onclick="navigate('messages')">Messages</a>
+      <a href="#" data-view="orgs" onclick="navigate('orgs')">Orgs</a>
+    </div>
+    <div class="topnav-actions">
+      <button class="btn-icon" onclick="navigate('messages')" title="Messages">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </button>
+      <div class="topnav-avatar" onclick="navigate('profile')">
+        <img id="nav-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34'%3E%3Crect fill='%23E5E4DF' width='34' height='34'/%3E%3Ctext x='17' y='21' text-anchor='middle' fill='%239C9C93' font-size='14'%3E?%3C/text%3E%3C/svg%3E" alt="">
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════ HOME VIEW ═══════════════════ -->
+<main id="home-view" class="view">
+  <div class="container">
+    <div class="home-hero">
+      <h1>Buy & sell on <span>campus</span></h1>
+      <p>Verified marketplace for students. Textbooks, electronics, tickets & more.</p>
+    </div>
+
+    <div class="mobile-search">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" placeholder="Search your campus…" id="mobile-search-input" onkeydown="if(event.key==='Enter')searchListings(this.value)">
+    </div>
+
+    <div class="categories-row" id="category-filters">
+      <button class="chip active" data-cat="all" onclick="filterCategory('all',this)">All</button>
+      <button class="chip" data-cat="textbooks" onclick="filterCategory('textbooks',this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        Textbooks
+      </button>
+      <button class="chip" data-cat="electronics" onclick="filterCategory('electronics',this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg>
+        Electronics
+      </button>
+      <button class="chip" data-cat="furniture" onclick="filterCategory('furniture',this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3"/><path d="M2 11v5a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0H6a2 2 0 0 0-4 0z"/><path d="M4 18v2m16-2v2"/></svg>
+        Furniture
+      </button>
+      <button class="chip" data-cat="clothing" onclick="filterCategory('clothing',this)">Clothing</button>
+      <button class="chip" data-cat="tickets" onclick="filterCategory('tickets',this)">Tickets</button>
+      <button class="chip" data-cat="services" onclick="filterCategory('services',this)">Services</button>
+      <button class="chip" data-cat="free" onclick="filterCategory('free',this)">Free Stuff</button>
+    </div>
+
+    <div class="listings-header">
+      <h3 id="listings-title">Recent Listings</h3>
+      <button class="btn btn-ghost btn-sm" onclick="toggleSort()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5h10M11 9h7M11 13h4M3 17l3 3 3-3M6 18V4"/></svg>
+        Sort
+      </button>
+    </div>
+
+    <div class="listings-grid" id="listings-grid"></div>
+
+    <div class="empty-state" id="empty-listings" style="display:none">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><path d="M12 12v4m-2-2h4"/></svg>
+      <h3>No listings yet</h3>
+      <p>Be the first to post something on your campus!</p>
+      <button class="btn btn-accent btn-sm" style="margin-top:16px" onclick="navigate('post')">Post a Listing</button>
+    </div>
+  </div>
+</main>
+
+<!-- ═══════════════════ LISTING DETAIL VIEW ═══════════════════ -->
+<div id="detail-view" class="view">
+  <div class="container">
+    <div class="detail-back" onclick="navigate('home')">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+      Back to browse
+    </div>
+    <div class="detail-grid">
+      <div class="detail-gallery">
+        <img id="detail-img" src="" alt="">
+      </div>
+      <div class="detail-info">
+        <div>
+          <div class="flex items-center gap-8" style="margin-bottom:8px">
+            <span class="badge badge-accent" id="detail-condition"></span>
+            <span class="badge badge-success" id="detail-category"></span>
+          </div>
+          <div class="detail-price" id="detail-price"></div>
+          <div class="detail-title" id="detail-title"></div>
+        </div>
+        <div class="detail-seller" id="detail-seller">
+          <div class="detail-seller-avatar"><img src="" alt="" id="detail-seller-img"></div>
+          <div class="detail-seller-info">
+            <div class="detail-seller-name" id="detail-seller-name"></div>
+            <div class="detail-seller-school" id="detail-seller-school"></div>
+          </div>
+        </div>
+        <div class="detail-actions">
+          <button class="btn btn-accent btn-lg w-full" id="detail-buy-btn" onclick="buyListing()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg>
+            Buy Now
+          </button>
+          <button class="btn btn-outline w-full" onclick="openMakeOffer()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Message Seller
+          </button>
+        </div>
+        <div class="detail-meta">
+          <div class="detail-meta-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <span id="detail-posted">Posted 2 hours ago</span>
+          </div>
+          <div class="detail-meta-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span id="detail-location">Campus pickup</span>
+          </div>
+        </div>
+        <div class="detail-description" id="detail-desc"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ POST LISTING VIEW ═══════════════════ -->
+<div id="post-view" class="view post-view">
+  <div class="container">
+    <div class="post-header">
+      <h2>Sell something</h2>
+      <p>List an item for your campus community</p>
+    </div>
+    <div class="post-form" id="post-form">
+      <div class="input-group">
+        <label>Photos (up to 6)</label>
+        <div class="photo-upload" id="photo-upload">
+          <div class="photo-upload-slot" onclick="triggerPhotoUpload(0)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            Add photo
+          </div>
+          <div class="photo-upload-slot" onclick="triggerPhotoUpload(1)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          <div class="photo-upload-slot" onclick="triggerPhotoUpload(2)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+        </div>
+        <input type="file" id="photo-input" accept="image/*" style="display:none" onchange="handlePhotoUpload(event)">
+      </div>
+
+      <div class="input-group">
+        <label>Title</label>
+        <input class="input" type="text" id="post-title" placeholder="What are you selling?" maxlength="80">
+      </div>
+
+      <div class="input-group">
+        <label>Description</label>
+        <textarea class="input" id="post-desc" placeholder="Describe your item — condition, features, why you're selling…" maxlength="2000"></textarea>
+      </div>
+
+      <div class="input-group">
+        <label>Price</label>
+        <div class="price-input">
+          <span class="currency">$</span>
+          <input type="number" id="post-price" placeholder="0.00" min="0" step="0.01">
+        </div>
+        <label style="margin-top:8px"><input type="checkbox" id="post-free" onchange="toggleFreePost()"> List as Free</label>
+      </div>
+
+      <div class="input-group">
+        <label>Category</label>
+        <select class="input" id="post-category">
+          <option value="">Select category</option>
+          <option value="textbooks">Textbooks</option>
+          <option value="electronics">Electronics</option>
+          <option value="furniture">Furniture</option>
+          <option value="clothing">Clothing</option>
+          <option value="tickets">Tickets & Events</option>
+          <option value="services">Services</option>
+          <option value="free">Free Stuff</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label>Condition</label>
+        <div class="condition-pills" id="condition-pills">
+          <button class="chip" data-condition="new" onclick="selectCondition('new',this)">New</button>
+          <button class="chip" data-condition="like-new" onclick="selectCondition('like-new',this)">Like New</button>
+          <button class="chip" data-condition="good" onclick="selectCondition('good',this)">Good</button>
+          <button class="chip" data-condition="fair" onclick="selectCondition('fair',this)">Fair</button>
+        </div>
+      </div>
+
+      <button class="btn btn-accent btn-lg w-full" onclick="submitListing()" id="post-submit-btn">
+        Post Listing
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ MESSAGES VIEW ═══════════════════ -->
+<div id="messages-view" class="view messages-view">
+  <div class="container">
+    <h2 style="padding:20px 0 16px">Messages</h2>
+    <div class="msg-list" id="msg-list"></div>
+    <div class="empty-state" id="empty-messages">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <h3>No messages yet</h3>
+      <p>When you contact a seller or get an inquiry, it'll show up here.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ CHAT VIEW ═══════════════════ -->
+<div id="chat-view" class="view" style="display:none">
+  <div style="display:flex;flex-direction:column;height:calc(100dvh - var(--nav-h))">
+    <div class="chat-header">
+      <div class="back-btn" onclick="navigate('messages')">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+      </div>
+      <div class="msg-thread-avatar" style="width:36px;height:36px"><img id="chat-avatar" src="" alt=""></div>
+      <div>
+        <div class="msg-thread-name" id="chat-name"></div>
+        <div class="text-xs text-secondary" id="chat-item-name"></div>
+      </div>
+    </div>
+    <div class="chat-messages" id="chat-messages"></div>
+    <div class="chat-input-bar">
+      <button class="btn-icon" onclick="openMakeOffer()" title="Make offer">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      </button>
+      <input type="text" id="chat-input" placeholder="Type a message…" onkeydown="if(event.key==='Enter')sendMessage()">
+      <button class="chat-send" onclick="sendMessage()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ ORG STOREFRONT VIEW ═══════════════════ -->
+<div id="orgs-view" class="view">
+  <div class="container">
+    <div class="home-hero" style="padding-bottom:16px">
+      <h2>Campus Organizations</h2>
+      <p>Event tickets, merch & more from verified clubs</p>
+    </div>
+    <div class="listings-grid" id="orgs-grid"></div>
+    <div class="empty-state" id="empty-orgs" style="display:none">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <h3>No organizations yet</h3>
+      <p>Campus orgs can apply for a verified storefront.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ ORG DETAIL VIEW ═══════════════════ -->
+<div id="org-detail-view" class="view">
+  <div class="container">
+    <div class="detail-back" onclick="navigate('orgs')">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+      All Organizations
+    </div>
+    <div class="org-hero">
+      <div class="org-logo"><img id="org-detail-logo" src="" alt=""></div>
+      <div class="org-info">
+        <h2 id="org-detail-name"></h2>
+        <p id="org-detail-school"></p>
+        <div class="flex items-center gap-8" style="margin-top:8px">
+          <span class="badge badge-org">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
+            Verified Org
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="org-tabs" id="org-tabs">
+      <button class="chip active" onclick="filterOrgTab('all',this)">All</button>
+      <button class="chip" onclick="filterOrgTab('tickets',this)">Tickets</button>
+      <button class="chip" onclick="filterOrgTab('merch',this)">Merch</button>
+    </div>
+    <div class="listings-grid" id="org-listings-grid"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════ PROFILE VIEW ═══════════════════ -->
+<div id="profile-view" class="view profile-view">
+  <div class="container">
+    <div class="flex justify-between items-center" style="padding:16px 0">
+      <h2>Profile</h2>
+      <button class="btn btn-ghost btn-sm" onclick="signOut()">Sign Out</button>
+    </div>
+    <div class="profile-card">
+      <div class="profile-avatar"><img id="profile-avatar-img" src="" alt=""></div>
+      <div class="profile-name" id="profile-name">—</div>
+      <div class="profile-school" id="profile-school">—</div>
+      <div class="profile-stats">
+        <div class="profile-stat"><div class="profile-stat-num" id="stat-listed">0</div><div class="profile-stat-label">Listed</div></div>
+        <div class="profile-stat"><div class="profile-stat-num" id="stat-sold">0</div><div class="profile-stat-label">Sold</div></div>
+        <div class="profile-stat"><div class="profile-stat-num" id="stat-bought">0</div><div class="profile-stat-label">Bought</div></div>
+      </div>
+    </div>
+    <div class="profile-tabs">
+      <div class="profile-tab active" onclick="switchProfileTab('my-listings',this)">My Listings</div>
+      <div class="profile-tab" onclick="switchProfileTab('purchases',this)">Purchases</div>
+      <div class="profile-tab" onclick="switchProfileTab('settings',this)">Settings</div>
+    </div>
+    <div id="profile-my-listings" class="profile-section">
+      <div class="listings-grid" id="my-listings-grid"></div>
+    </div>
+    <div id="profile-purchases" class="profile-section" style="display:none">
+      <div class="listings-grid" id="purchases-grid"></div>
+    </div>
+    <div id="profile-settings" class="profile-section" style="display:none">
+      <div class="card" style="padding:20px;display:flex;flex-direction:column;gap:16px">
+        <div class="input-group"><label>Display Name</label><input class="input" id="settings-name" type="text"></div>
+        <div class="input-group"><label>Graduation Year</label><select class="input" id="settings-year"><option>2025</option><option>2026</option><option>2027</option><option>2028</option><option>2029</option></select></div>
+        <button class="btn btn-primary" onclick="saveSettings()">Save Changes</button>
+        <div class="divider"></div>
+        <h3 style="font-size:.9375rem">Stripe Payouts</h3>
+        <p class="text-sm text-secondary">Connect your Stripe account to receive payouts when your items sell.</p>
+        <button class="btn btn-outline" onclick="connectStripe()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 4H3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/><path d="M1 10h22"/></svg>
+          Connect Stripe
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ BOTTOM NAV ═══════════════════ -->
+<nav class="bottomnav" id="bottomnav" style="display:none">
+  <div class="bottomnav-item active" data-view="home" onclick="navigate('home')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>Home</span>
+  </div>
+  <div class="bottomnav-item" data-view="orgs" onclick="navigate('orgs')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    <span>Orgs</span>
+  </div>
+  <div class="bottomnav-post" onclick="navigate('post')">
+    <div class="post-btn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+    <span>Sell</span>
+  </div>
+  <div class="bottomnav-item" data-view="messages" onclick="navigate('messages')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    <span>Chat</span>
+  </div>
+  <div class="bottomnav-item" data-view="profile" onclick="navigate('profile')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <span>Profile</span>
+  </div>
+</nav>
+
+<!-- ═══════════════════ OFFER MODAL ═══════════════════ -->
+<div class="modal-overlay" id="offer-modal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <h3>Make an Offer</h3>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="input-group">
+        <label>Your Offer</label>
+        <div class="price-input">
+          <span class="currency">$</span>
+          <input type="number" id="offer-amount" placeholder="0.00" min="0" step="0.01">
+        </div>
+      </div>
+      <div class="input-group">
+        <label>Message (optional)</label>
+        <textarea class="input" id="offer-message" placeholder="Say something to the seller…" rows="3"></textarea>
+      </div>
+      <button class="btn btn-accent w-full" onclick="submitOffer()">Send Offer</button>
+      <button class="btn btn-ghost w-full" onclick="closeModal('offer-modal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ TOAST CONTAINER ═══════════════════ -->
+<div class="toast-container" id="toast-container"></div>
+
+<!-- ═══════════════════ FIREBASE SDK ═══════════════════ -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+
+<script>
+// ═══════════════════════════════════════════════════
+// CONFIG — Replace with your actual keys
+// ═══════════════════════════════════════════════════
+const CONFIG = {
+  WORKER_URL: 'https://marketplace-db.workers.dev',
+  FIREBASE: {
+    apiKey: "YOUR_FIREBASE_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+  }
+};
+
+// ═══════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════
+const state = {
+  user: null,
+  listings: [],
+  currentListing: null,
+  currentChat: null,
+  messages: {},
+  photos: [],
+  selectedCondition: '',
+  currentCategory: 'all',
+  currentView: 'home',
+};
+
+// ═══════════════════════════════════════════════════
+// SCHOOL DOMAIN MAP
+// ═══════════════════════════════════════════════════
+const SCHOOL_MAP = {
+  'stanford.edu': 'Stanford University',
+  'berkeley.edu': 'UC Berkeley',
+  'mit.edu': 'MIT',
+  'harvard.edu': 'Harvard University',
+  'yale.edu': 'Yale University',
+  'princeton.edu': 'Princeton University',
+  'columbia.edu': 'Columbia University',
+  'nyu.edu': 'New York University',
+  'ucla.edu': 'UCLA',
+  'umich.edu': 'University of Michigan',
+  'unc.edu': 'UNC Chapel Hill',
+  'gatech.edu': 'Georgia Tech',
+  'utexas.edu': 'UT Austin',
+  'illinois.edu': 'UIUC',
+  'purdue.edu': 'Purdue University',
+  'wisc.edu': 'UW-Madison',
+  'uw.edu': 'University of Washington',
+  'usc.edu': 'USC',
+  'cornell.edu': 'Cornell University',
+  'upenn.edu': 'University of Pennsylvania',
+};
+
+function getSchoolFromEmail(email) {
+  const domain = email.split('@')[1];
+  if (!domain) return null;
+  if (SCHOOL_MAP[domain]) return SCHOOL_MAP[domain];
+  // Fallback: prettify the domain
+  const parts = domain.replace('.edu', '').split('.');
+  return parts.map(p => p.charAt(0).toUpperCase() + p.slice(1)).join(' ');
+}
+
+function isEduEmail(email) {
+  return email && email.toLowerCase().endsWith('.edu');
+}
+
+// ═══════════════════════════════════════════════════
+// FIREBASE AUTH
+// ═══════════════════════════════════════════════════
+firebase.initializeApp(CONFIG.FIREBASE);
+const auth = firebase.auth();
+
+auth.onAuthStateChanged(async (user) => {
+  if (user && isEduEmail(user.email)) {
+    state.user = {
+      uid: user.uid,
+      email: user.email,
+      name: user.displayName || user.email.split('@')[0],
+      photo: user.photoURL || null,
+      school: getSchoolFromEmail(user.email),
+    };
+    enterApp();
+  }
+});
+
+async function googleSignIn() {
+  try {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    provider.setCustomParameters({ hd: '' }); // Allow any domain, we check .edu client-side
+    const result = await auth.signInWithPopup(provider);
+    const email = result.user.email;
+    if (!isEduEmail(email)) {
+      await auth.signOut();
+      showToast('Only .edu email addresses are allowed', 'error');
+      return;
+    }
+    state.user = {
+      uid: result.user.uid,
+      email,
+      name: result.user.displayName || email.split('@')[0],
+      photo: result.user.photoURL,
+      school: getSchoolFromEmail(email),
+    };
+    // Register user via worker
+    await api('signup', {
+      uid: state.user.uid,
+      email: state.user.email,
+      name: state.user.name,
+      school: state.user.school,
+    });
+    enterApp();
+  } catch (e) {
+    if (e.code !== 'auth/popup-closed-by-user') {
+      showToast('Sign-in failed: ' + e.message, 'error');
+    }
+  }
+}
+
+async function emailSignUp() {
+  const name = document.getElementById('signup-name').value.trim();
+  const email = document.getElementById('signup-email').value.trim();
+  const password = document.getElementById('signup-password').value;
+  const year = document.getElementById('signup-year').value;
+
+  if (!name || !email || !password) return showToast('Please fill in all fields', 'error');
+  if (!isEduEmail(email)) return showToast('Only .edu email addresses are allowed', 'error');
+  if (password.length < 8) return showToast('Password must be at least 8 characters', 'error');
+
+  try {
+    const result = await auth.createUserWithEmailAndPassword(email, password);
+    await result.user.updateProfile({ displayName: name });
+    await result.user.sendEmailVerification();
+    const school = getSchoolFromEmail(email);
+    state.user = { uid: result.user.uid, email, name, photo: null, school, year };
+    await api('signup', { uid: state.user.uid, email, name, school, year });
+    enterApp();
+    showToast('Check your email to verify your account', 'success');
+  } catch (e) {
+    showToast(e.message, 'error');
+  }
+}
+
+async function emailLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+  if (!email || !password) return showToast('Please fill in all fields', 'error');
+  try {
+    const result = await auth.signInWithEmailAndPassword(email, password);
+    if (!isEduEmail(result.user.email)) {
+      await auth.signOut();
+      return showToast('Only .edu email addresses are allowed', 'error');
+    }
+    state.user = {
+      uid: result.user.uid,
+      email: result.user.email,
+      name: result.user.displayName || email.split('@')[0],
+      photo: result.user.photoURL,
+      school: getSchoolFromEmail(result.user.email),
+    };
+    enterApp();
+  } catch (e) {
+    showToast('Login failed: ' + e.message, 'error');
+  }
+}
+
+function signOut() {
+  auth.signOut();
+  state.user = null;
+  document.getElementById('auth-view').style.display = 'flex';
+  document.getElementById('topnav').style.display = 'none';
+  document.getElementById('bottomnav').style.display = 'none';
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+}
+
+function showLogin() {
+  document.getElementById('auth-signup').style.display = 'none';
+  document.getElementById('auth-login').style.display = 'flex';
+}
+function showSignup() {
+  document.getElementById('auth-signup').style.display = 'flex';
+  document.getElementById('auth-login').style.display = 'none';
+}
+
+// ═══════════════════════════════════════════════════
+// API HELPER
+// ═══════════════════════════════════════════════════
+async function api(action, data = {}) {
+  try {
+    const res = await fetch(CONFIG.WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action, ...data, uid: state.user?.uid }),
+    });
+    const json = await res.json();
+    if (!res.ok) throw new Error(json.error || 'Request failed');
+    return json;
+  } catch (e) {
+    console.error(`API ${action} error:`, e);
+    // Return mock data in demo mode
+    return getMockData(action, data);
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// MOCK DATA (fallback when worker isn't connected)
+// ═══════════════════════════════════════════════════
+const MOCK_LISTINGS = [
+  { id:'1', uid:'u1', title:'Calculus: Early Transcendentals 9th Ed', desc:'Barely used, no highlights. Covers Calc I–III. Pickup near the library.', price:45, category:'textbooks', condition:'like-new', school:'Stanford University', photos:[], status:'active', created_at:'2026-04-03T10:00:00Z', seller_name:'Alex M.', seller_school:'Stanford University', seller_photo:null },
+  { id:'2', uid:'u2', title:'MacBook Air M2 — 256GB', desc:'2023 model, midnight color, 97% battery health. Comes with charger and sleeve. Selling because I upgraded.', price:749, category:'electronics', condition:'good', school:'Stanford University', photos:[], status:'active', created_at:'2026-04-02T15:30:00Z', seller_name:'Jordan K.', seller_school:'Stanford University', seller_photo:null },
+  { id:'3', uid:'u3', title:'IKEA KALLAX Shelf Unit', desc:'4-cube white shelf. Perfect for dorm or apartment. A few scuffs on the sides but very sturdy. You pick up.', price:25, category:'furniture', condition:'fair', school:'Stanford University', photos:[], status:'active', created_at:'2026-04-01T09:15:00Z', seller_name:'Sam P.', seller_school:'Stanford University', seller_photo:null },
+  { id:'4', uid:'u4', title:'Vintage Levi\'s 501 Jeans W30', desc:'Authentic vintage 501s, medium wash, great fade. Waist 30, length 32.', price:38, category:'clothing', condition:'good', school:'Stanford University', photos:[], status:'active', created_at:'2026-04-03T18:00:00Z', seller_name:'Riley T.', seller_school:'Stanford University', seller_photo:null },
+  { id:'5', uid:'u1', title:'TI-84 Plus CE Calculator', desc:'Works perfectly. Comes with USB charging cable. Great for math and science courses.', price:60, category:'electronics', condition:'good', school:'Stanford University', photos:[], status:'active', created_at:'2026-04-03T12:45:00Z', seller_name:'Alex M.', seller_school:'Stanford University', seller_photo:null },
+  { id:'6', uid:'u5', title:'FREE — Moving Boxes & Packing Tape', desc:'Moving out and have 15+ boxes of various sizes plus 3 rolls of tape. First come first serve, pick up from Roble Hall.', price:0, category:'free', condition:'good', school:'Stanford University', photos:[], status:'active', created_at:'2026-04-03T08:00:00Z', seller_name:'Morgan L.', seller_school:'Stanford University', seller_photo:null },
+  { id:'7', uid:'u2', title:'Organic Chemistry Tutor — $25/hr', desc:'Chemistry PhD student offering tutoring for CHEM 31A/B and Orgo I/II. Flexible scheduling, can meet on campus or Zoom.', price:25, category:'services', condition:'new', school:'Stanford University', photos:[], status:'active', created_at:'2026-04-02T20:00:00Z', seller_name:'Jordan K.', seller_school:'Stanford University', seller_photo:null },
+  { id:'8', uid:'u6', title:'Sony WH-1000XM5 Headphones', desc:'Best noise-cancelling headphones. Silver color. Includes case, cable, and airplane adapter. 10 months old.', price:199, category:'electronics', condition:'like-new', school:'Stanford University', photos:[], status:'active', created_at:'2026-04-01T14:00:00Z', seller_name:'Casey D.', seller_school:'Stanford University', seller_photo:null },
+];
+
+const MOCK_ORGS = [
+  { id:'o1', uid:'ou1', name:'Stanford ACM', school:'Stanford University', verified:true, logo:null, desc:'Association for Computing Machinery — Stanford Chapter' },
+  { id:'o2', uid:'ou2', name:'Treehouse Comedy', school:'Stanford University', verified:true, logo:null, desc:'Stanford\'s premiere sketch comedy group' },
+  { id:'o3', uid:'ou3', name:'Stanford Solar Car', school:'Stanford University', verified:true, logo:null, desc:'Engineering team building solar-powered vehicles' },
+];
+
+const MOCK_ORG_LISTINGS = [
+  { id:'ol1', uid:'ou1', title:'HackStanford 2026 — Early Bird Ticket', desc:'48-hour hackathon, April 19–20. Includes meals, swag, and workshops.', price:15, category:'tickets', condition:'new', school:'Stanford University', photos:[], status:'active', created_at:'2026-04-01T10:00:00Z', seller_name:'Stanford ACM', is_org:true },
+  { id:'ol2', uid:'ou2', title:'Spring Show Tickets — Treehouse Comedy', desc:'Annual spring sketch show. Memorial Auditorium, April 25, 8 PM.', price:10, category:'tickets', condition:'new', school:'Stanford University', photos:[], status:'active', created_at:'2026-04-02T10:00:00Z', seller_name:'Treehouse Comedy', is_org:true },
+  { id:'ol3', uid:'ou1', title:'ACM Chapter T-Shirt', desc:'Navy blue tee with ACM logo. 100% cotton, unisex sizing.', price:18, category:'clothing', condition:'new', school:'Stanford University', photos:[], status:'active', created_at:'2026-04-03T10:00:00Z', seller_name:'Stanford ACM', is_org:true },
+];
+
+const MOCK_MESSAGES = [
+  { id:'m1', listing_id:'2', from_uid:'u_me', to_uid:'u2', from_name:'You', to_name:'Jordan K.', item_title:'MacBook Air M2', last_text:'Is this still available?', time:'2h ago', unread:true, avatar:null },
+  { id:'m2', listing_id:'3', from_uid:'u3', to_uid:'u_me', from_name:'Sam P.', to_name:'You', item_title:'IKEA KALLAX Shelf', last_text:'Yes! When can you pick up?', time:'5h ago', unread:false, avatar:null },
+];
+
+function getMockData(action, data) {
+  switch (action) {
+    case 'get_listings':
+      let filtered = [...MOCK_LISTINGS];
+      if (data.category && data.category !== 'all') filtered = filtered.filter(l => l.category === data.category);
+      if (data.search) {
+        const q = data.search.toLowerCase();
+        filtered = filtered.filter(l => l.title.toLowerCase().includes(q) || l.desc.toLowerCase().includes(q));
+      }
+      return { data: filtered };
+    case 'get_listing':
+      return { data: MOCK_LISTINGS.find(l => l.id === data.id) || MOCK_LISTINGS[0] };
+    case 'search_listings':
+      const sq = (data.query || '').toLowerCase();
+      return { data: MOCK_LISTINGS.filter(l => l.title.toLowerCase().includes(sq) || l.desc.toLowerCase().includes(sq)) };
+    case 'get_messages':
+      return { data: MOCK_MESSAGES };
+    case 'get_orgs':
+      return { data: MOCK_ORGS };
+    case 'get_org_listings':
+      return { data: MOCK_ORG_LISTINGS };
+    case 'signup':
+    case 'login':
+    case 'create_listing':
+    case 'create_order':
+    case 'send_message':
+      return { success: true };
+    default:
+      return { data: [] };
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════
+function navigate(view, params = {}) {
+  state.currentView = view;
+
+  // Hide chat if not going to chat
+  document.getElementById('chat-view').style.display = 'none';
+
+  // Toggle views
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  const target = document.getElementById(view + '-view');
+  if (target) target.classList.add('active');
+
+  // Update nav active states
+  document.querySelectorAll('.bottomnav-item').forEach(item => {
+    item.classList.toggle('active', item.dataset.view === view);
+  });
+  document.querySelectorAll('.topnav-links a').forEach(a => {
+    a.classList.toggle('active', a.dataset.view === view);
+  });
+
+  // Load view data
+  switch (view) {
+    case 'home': loadListings(); break;
+    case 'detail': showListingDetail(params.id); break;
+    case 'messages': loadMessages(); break;
+    case 'chat': openChat(params); break;
+    case 'orgs': loadOrgs(); break;
+    case 'org-detail': showOrgDetail(params.id); break;
+    case 'profile': loadProfile(); break;
+    case 'post': resetPostForm(); break;
+  }
+
+  window.scrollTo(0, 0);
+}
+
+function enterApp() {
+  document.getElementById('auth-view').style.display = 'none';
+  document.getElementById('topnav').style.display = '';
+  document.getElementById('bottomnav').style.display = '';
+  if (state.user?.photo) {
+    document.getElementById('nav-avatar').src = state.user.photo;
+  }
+  navigate('home');
+}
+
+// ═══════════════════════════════════════════════════
+// LISTINGS
+// ═══════════════════════════════════════════════════
+async function loadListings() {
+  const result = await api('get_listings', {
+    category: state.currentCategory !== 'all' ? state.currentCategory : undefined,
+    school: state.user?.school,
+  });
+  state.listings = result.data || [];
+  renderListings(state.listings);
+}
+
+function renderListings(listings) {
+  const grid = document.getElementById('listings-grid');
+  const empty = document.getElementById('empty-listings');
+
+  if (!listings.length) {
+    grid.innerHTML = '';
+    empty.style.display = 'flex';
+    return;
+  }
+  empty.style.display = 'none';
+
+  grid.innerHTML = listings.map((l, i) => `
+    <div class="card listing-link" onclick="navigate('detail',{id:'${l.id}'})" style="animation-delay:${i * .04}s">
+      <div class="card-img" style="background:${getPlaceholderGradient(l.category)}">
+        ${l.photos?.length ? `<img src="${l.photos[0]}" alt="${esc(l.title)}">` : `
+          <div style="display:flex;align-items:center;justify-content:center;height:100%;opacity:.3">
+            ${getCategoryIcon(l.category)}
+          </div>
+        `}
+        <span class="listing-condition badge ${l.condition === 'new' ? 'badge-success' : 'badge-warning'}" style="font-size:.6875rem">${capitalize(l.condition)}</span>
+        <div class="listing-save" onclick="event.stopPropagation();toggleSave('${l.id}',this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-price">${l.price === 0 ? '<span class="text-accent">Free</span>' : '$' + formatPrice(l.price)}</div>
+        <div class="card-title">${esc(l.title)}</div>
+        <div class="card-meta">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          ${timeAgo(l.created_at)}
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterCategory(cat, el) {
+  state.currentCategory = cat;
+  document.querySelectorAll('#category-filters .chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('listings-title').textContent = cat === 'all' ? 'Recent Listings' : capitalize(cat);
+  loadListings();
+}
+
+async function searchListings(query) {
+  if (!query.trim()) return loadListings();
+  const result = await api('search_listings', { query: query.trim(), school: state.user?.school });
+  state.listings = result.data || [];
+  document.getElementById('listings-title').textContent = `Results for "${query}"`;
+  renderListings(state.listings);
+  navigate('home');
+}
+
+function toggleSort() {
+  state.listings.reverse();
+  renderListings(state.listings);
+}
+
+// ═══════════════════════════════════════════════════
+// LISTING DETAIL
+// ═══════════════════════════════════════════════════
+async function showListingDetail(id) {
+  const result = await api('get_listing', { id });
+  const listing = result.data;
+  if (!listing) return navigate('home');
+  state.currentListing = listing;
+
+  document.getElementById('detail-img').src = listing.photos?.[0] || '';
+  document.getElementById('detail-img').parentElement.style.background = getPlaceholderGradient(listing.category);
+  if (!listing.photos?.length) {
+    document.getElementById('detail-img').style.display = 'none';
+    document.getElementById('detail-img').parentElement.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;opacity:.2">${getCategoryIcon(listing.category, 80)}</div>`;
+  }
+  document.getElementById('detail-price').textContent = listing.price === 0 ? 'Free' : '$' + formatPrice(listing.price);
+  document.getElementById('detail-title').textContent = listing.title;
+  document.getElementById('detail-condition').textContent = capitalize(listing.condition);
+  document.getElementById('detail-category').textContent = capitalize(listing.category);
+  document.getElementById('detail-seller-name').textContent = listing.seller_name || 'Seller';
+  document.getElementById('detail-seller-school').textContent = listing.seller_school || listing.school;
+  document.getElementById('detail-posted').textContent = 'Posted ' + timeAgo(listing.created_at);
+  document.getElementById('detail-desc').textContent = listing.desc;
+
+  const buyBtn = document.getElementById('detail-buy-btn');
+  if (listing.price === 0) {
+    buyBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Claim Item`;
+  } else {
+    buyBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg> Buy Now — $${formatPrice(listing.price)}`;
+  }
+  if (listing.uid === state.user?.uid) {
+    buyBtn.textContent = 'Your Listing';
+    buyBtn.disabled = true;
+  }
+}
+
+async function buyListing() {
+  if (!state.currentListing) return;
+  const listing = state.currentListing;
+  if (listing.uid === state.user?.uid) return showToast('This is your own listing', 'error');
+
+  if (listing.price === 0) {
+    // Free item — just message seller
+    navigate('chat', { listing_id: listing.id, to_uid: listing.uid, to_name: listing.seller_name, item_title: listing.title });
+    return;
+  }
+
+  // Stripe checkout (would redirect to Stripe in production)
+  showToast('Redirecting to Stripe checkout…', 'success');
+  try {
+    const result = await api('create_order', {
+      listing_id: listing.id,
+      buyer_uid: state.user.uid,
+      seller_uid: listing.uid,
+      amount: listing.price,
+    });
+    if (result.checkout_url) {
+      window.location.href = result.checkout_url;
+    } else {
+      showToast('Order created! Payment simulated in demo mode.', 'success');
+    }
+  } catch (e) {
+    showToast('Payment error: ' + e.message, 'error');
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// POST LISTING
+// ═══════════════════════════════════════════════════
+function resetPostForm() {
+  state.photos = [];
+  state.selectedCondition = '';
+  document.getElementById('post-title').value = '';
+  document.getElementById('post-desc').value = '';
+  document.getElementById('post-price').value = '';
+  document.getElementById('post-category').value = '';
+  document.getElementById('post-free').checked = false;
+  document.querySelectorAll('#condition-pills .chip').forEach(c => c.classList.remove('active'));
+  renderPhotoSlots();
+}
+
+let currentPhotoSlot = 0;
+function triggerPhotoUpload(slot) {
+  currentPhotoSlot = slot;
+  document.getElementById('photo-input').click();
+}
+
+function handlePhotoUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  if (file.size > 5 * 1024 * 1024) return showToast('Image must be under 5MB', 'error');
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    state.photos[currentPhotoSlot] = e.target.result;
+    renderPhotoSlots();
+  };
+  reader.readAsDataURL(file);
+  event.target.value = '';
+}
+
+function renderPhotoSlots() {
+  const container = document.getElementById('photo-upload');
+  const slots = Math.max(3, Math.min(6, state.photos.filter(Boolean).length + 1));
+  container.innerHTML = Array.from({ length: slots }, (_, i) => {
+    if (state.photos[i]) {
+      return `<div class="photo-upload-slot filled" onclick="triggerPhotoUpload(${i})">
+        <img src="${state.photos[i]}" alt="Photo ${i + 1}">
+        <div class="remove-photo" onclick="event.stopPropagation();removePhoto(${i})">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </div>
+      </div>`;
+    }
+    return `<div class="photo-upload-slot" onclick="triggerPhotoUpload(${i})">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      ${i === 0 ? 'Add photo' : ''}
+    </div>`;
+  }).join('');
+}
+
+function removePhoto(i) {
+  state.photos.splice(i, 1);
+  renderPhotoSlots();
+}
+
+function selectCondition(cond, el) {
+  state.selectedCondition = cond;
+  document.querySelectorAll('#condition-pills .chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function toggleFreePost() {
+  const priceInput = document.getElementById('post-price');
+  const freeCheck = document.getElementById('post-free');
+  priceInput.disabled = freeCheck.checked;
+  if (freeCheck.checked) {
+    priceInput.value = '0';
+    document.getElementById('post-category').value = 'free';
+  }
+}
+
+async function submitListing() {
+  const title = document.getElementById('post-title').value.trim();
+  const desc = document.getElementById('post-desc').value.trim();
+  const price = parseFloat(document.getElementById('post-price').value) || 0;
+  const category = document.getElementById('post-category').value;
+  const condition = state.selectedCondition;
+
+  if (!title) return showToast('Add a title', 'error');
+  if (!category) return showToast('Select a category', 'error');
+  if (!condition) return showToast('Select condition', 'error');
+
+  const btn = document.getElementById('post-submit-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner"></div> Posting…';
+
+  try {
+    await api('create_listing', {
+      title, desc, price, category, condition,
+      school: state.user.school,
+      photos: state.photos.filter(Boolean),
+    });
+    showToast('Listing posted!', 'success');
+    navigate('home');
+  } catch (e) {
+    showToast('Failed to post: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Post Listing';
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// MESSAGES
+// ═══════════════════════════════════════════════════
+async function loadMessages() {
+  const result = await api('get_messages', { uid: state.user?.uid });
+  const threads = result.data || [];
+
+  const list = document.getElementById('msg-list');
+  const empty = document.getElementById('empty-messages');
+
+  if (!threads.length) {
+    list.innerHTML = '';
+    empty.style.display = 'flex';
+    return;
+  }
+  empty.style.display = 'none';
+
+  list.innerHTML = threads.map(t => `
+    <div class="msg-thread" onclick="navigate('chat',${JSON.stringify({ listing_id: t.listing_id, to_uid: t.from_uid === state.user?.uid ? t.to_uid : t.from_uid, to_name: t.from_uid === state.user?.uid ? t.to_name : t.from_name, item_title: t.item_title }).replace(/"/g, '&quot;')})">
+      <div class="msg-thread-avatar">
+        ${t.avatar ? `<img src="${t.avatar}" alt="">` : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--surface-alt);font-weight:700;font-family:var(--font-display);color:var(--ink-tertiary)">${(t.from_uid === state.user?.uid ? t.to_name : t.from_name)?.[0] || '?'}</div>`}
+      </div>
+      <div class="msg-thread-info">
+        <div class="msg-thread-top">
+          <span class="msg-thread-name">${esc(t.from_uid === state.user?.uid ? t.to_name : t.from_name)}</span>
+          <span class="msg-thread-time">${t.time}</span>
+        </div>
+        <div class="msg-thread-preview">${esc(t.last_text)}</div>
+        <div class="msg-thread-item">${esc(t.item_title)}</div>
+      </div>
+      ${t.unread ? '<div class="msg-unread"></div>' : ''}
+    </div>
+  `).join('');
+}
+
+function openChat(params) {
+  state.currentChat = params;
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  const chatView = document.getElementById('chat-view');
+  chatView.style.display = 'block';
+
+  document.getElementById('chat-name').textContent = params.to_name || 'Seller';
+  document.getElementById('chat-item-name').textContent = params.item_title || '';
+
+  // Mock chat messages
+  const container = document.getElementById('chat-messages');
+  container.innerHTML = `
+    <div class="chat-bubble received">
+      <div>Hi! Is this still available?</div>
+      <div class="time">2:30 PM</div>
+    </div>
+    <div class="chat-bubble sent">
+      <div>Yes it is! Are you on campus?</div>
+      <div class="time">2:32 PM</div>
+    </div>
+  `;
+  container.scrollTop = container.scrollHeight;
+}
+
+function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text) return;
+
+  const container = document.getElementById('chat-messages');
+  const bubble = document.createElement('div');
+  bubble.className = 'chat-bubble sent';
+  bubble.innerHTML = `<div>${esc(text)}</div><div class="time">${new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}</div>`;
+  container.appendChild(bubble);
+  container.scrollTop = container.scrollHeight;
+  input.value = '';
+
+  // Send to API
+  if (state.currentChat) {
+    api('send_message', {
+      listing_id: state.currentChat.listing_id,
+      to_uid: state.currentChat.to_uid,
+      text,
+    });
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// OFFERS
+// ═══════════════════════════════════════════════════
+function openMakeOffer() {
+  document.getElementById('offer-modal').classList.add('active');
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('active');
+}
+
+function submitOffer() {
+  const amount = parseFloat(document.getElementById('offer-amount').value);
+  const message = document.getElementById('offer-message').value.trim();
+
+  if (!amount || amount <= 0) return showToast('Enter a valid offer amount', 'error');
+
+  // Add offer to chat
+  const container = document.getElementById('chat-messages') || null;
+  if (container && state.currentChat) {
+    const offerHtml = document.createElement('div');
+    offerHtml.className = 'chat-offer';
+    offerHtml.innerHTML = `
+      <div class="chat-offer-label">Your Offer</div>
+      <div class="chat-offer-amount">$${formatPrice(amount)}</div>
+      ${message ? `<div style="margin-top:8px;font-size:.875rem;color:var(--ink-secondary)">${esc(message)}</div>` : ''}
+    `;
+    container.appendChild(offerHtml);
+    container.scrollTop = container.scrollHeight;
+  }
+
+  closeModal('offer-modal');
+  showToast('Offer sent!', 'success');
+  document.getElementById('offer-amount').value = '';
+  document.getElementById('offer-message').value = '';
+}
+
+// ═══════════════════════════════════════════════════
+// ORGANIZATIONS
+// ═══════════════════════════════════════════════════
+async function loadOrgs() {
+  const result = await api('get_orgs', { school: state.user?.school });
+  const orgs = result.data || [];
+
+  const grid = document.getElementById('orgs-grid');
+  const empty = document.getElementById('empty-orgs');
+
+  if (!orgs.length) {
+    grid.innerHTML = '';
+    empty.style.display = 'flex';
+    return;
+  }
+  empty.style.display = 'none';
+
+  grid.innerHTML = orgs.map((org, i) => `
+    <div class="card listing-link" onclick="navigate('org-detail',{id:'${org.id}'})" style="animation-delay:${i * .04}s">
+      <div class="card-img" style="background:${getPlaceholderGradient('org')}">
+        ${org.logo ? `<img src="${org.logo}" alt="${esc(org.name)}">` : `
+          <div style="display:flex;align-items:center;justify-content:center;height:100%;font-family:var(--font-display);font-weight:900;font-size:2rem;opacity:.25">${org.name?.[0] || '?'}</div>
+        `}
+      </div>
+      <div class="card-body">
+        <div style="display:flex;align-items:center;gap:6px">
+          <span class="card-title" style="font-weight:700;margin:0">${esc(org.name)}</span>
+          ${org.verified ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="#2563EB" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>' : ''}
+        </div>
+        <div class="card-meta">${esc(org.school)}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function showOrgDetail(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('org-detail-view').classList.add('active');
+
+  const orgResult = await api('get_orgs', { school: state.user?.school });
+  const org = (orgResult.data || []).find(o => o.id === id) || {};
+
+  document.getElementById('org-detail-name').textContent = org.name || '';
+  document.getElementById('org-detail-school').textContent = org.desc || org.school || '';
+
+  const listingsResult = await api('get_org_listings', { org_id: id });
+  renderOrgListings(listingsResult.data || []);
+}
+
+function renderOrgListings(listings) {
+  const grid = document.getElementById('org-listings-grid');
+  grid.innerHTML = listings.map((l, i) => `
+    <div class="card listing-link" onclick="navigate('detail',{id:'${l.id}'})" style="animation-delay:${i * .04}s">
+      <div class="card-img" style="background:${getPlaceholderGradient(l.category)}">
+        <div style="display:flex;align-items:center;justify-content:center;height:100%;opacity:.3">
+          ${getCategoryIcon(l.category)}
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-price">$${formatPrice(l.price)}</div>
+        <div class="card-title">${esc(l.title)}</div>
+        <div class="card-meta">
+          <span class="badge badge-org" style="font-size:.625rem;padding:2px 6px">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
+            Verified
+          </span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterOrgTab(tab, el) {
+  document.querySelectorAll('#org-tabs .chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  // In production, re-fetch filtered listings
+}
+
+// ═══════════════════════════════════════════════════
+// PROFILE
+// ═══════════════════════════════════════════════════
+function loadProfile() {
+  if (!state.user) return;
+  document.getElementById('profile-name').textContent = state.user.name;
+  document.getElementById('profile-school').textContent = state.user.school || '—';
+  if (state.user.photo) {
+    document.getElementById('profile-avatar-img').src = state.user.photo;
+  }
+  document.getElementById('settings-name').value = state.user.name;
+}
+
+function switchProfileTab(tab, el) {
+  document.querySelectorAll('.profile-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('profile-my-listings').style.display = tab === 'my-listings' ? '' : 'none';
+  document.getElementById('profile-purchases').style.display = tab === 'purchases' ? '' : 'none';
+  document.getElementById('profile-settings').style.display = tab === 'settings' ? '' : 'none';
+}
+
+function saveSettings() {
+  const name = document.getElementById('settings-name').value.trim();
+  if (name) {
+    state.user.name = name;
+    document.getElementById('profile-name').textContent = name;
+    showToast('Settings saved', 'success');
+  }
+}
+
+function connectStripe() {
+  showToast('Stripe Connect onboarding would open here', 'success');
+}
+
+// ═══════════════════════════════════════════════════
+// UTILITIES
+// ═══════════════════════════════════════════════════
+function esc(str) {
+  if (!str) return '';
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function capitalize(str) {
+  if (!str) return '';
+  return str.charAt(0).toUpperCase() + str.slice(1).replace(/-/g, ' ');
+}
+
+function formatPrice(num) {
+  return Number(num).toFixed(num % 1 ? 2 : 0);
+}
+
+function timeAgo(dateStr) {
+  if (!dateStr) return '';
+  const diff = Date.now() - new Date(dateStr).getTime();
+  const mins = Math.floor(diff / 60000);
+  if (mins < 1) return 'Just now';
+  if (mins < 60) return mins + 'm ago';
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return hrs + 'h ago';
+  const days = Math.floor(hrs / 24);
+  if (days < 7) return days + 'd ago';
+  return new Date(dateStr).toLocaleDateString();
+}
+
+function showToast(msg, type = '') {
+  const container = document.getElementById('toast-container');
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `
+    ${type === 'success' ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>' :
+      type === 'error' ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg>' : ''}
+    ${esc(msg)}
+  `;
+  container.appendChild(toast);
+  setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(100px)'; setTimeout(() => toast.remove(), 300); }, 3500);
+}
+
+function toggleSave(id, el) {
+  el.classList.toggle('saved');
+}
+
+function getPlaceholderGradient(category) {
+  const gradients = {
+    textbooks: 'linear-gradient(135deg,#FEF3C7,#FDE68A)',
+    electronics: 'linear-gradient(135deg,#DBEAFE,#BFDBFE)',
+    furniture: 'linear-gradient(135deg,#F3E8FF,#E9D5FF)',
+    clothing: 'linear-gradient(135deg,#FCE7F3,#FBCFE8)',
+    tickets: 'linear-gradient(135deg,#D1FAE5,#A7F3D0)',
+    services: 'linear-gradient(135deg,#E0E7FF,#C7D2FE)',
+    free: 'linear-gradient(135deg,#ECFDF5,#D1FAE5)',
+    org: 'linear-gradient(135deg,#EFF6FF,#DBEAFE)',
+    other: 'linear-gradient(135deg,#F1F5F9,#E2E8F0)',
+  };
+  return gradients[category] || gradients.other;
+}
+
+function getCategoryIcon(category, size = 48) {
+  const icons = {
+    textbooks: `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>`,
+    electronics: `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg>`,
+    furniture: `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3"/><path d="M2 11v5a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0H6a2 2 0 0 0-4 0z"/><path d="M4 18v2m16-2v2"/></svg>`,
+    clothing: `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6.3 2h11.4l4.3 4-3 2v14H5V8L2 6z"/></svg>`,
+    tickets: `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 9a3 3 0 0 1 0 6v5h20v-5a3 3 0 0 1 0-6V4H2z"/><path d="M13 4v2m0 14v2m0-6v2m0-6v2"/></svg>`,
+    services: `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`,
+    free: `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-6"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>`,
+  };
+  return icons[category] || icons.services;
+}
+
+// ═══════════════════════════════════════════════════
+// CLICK OUTSIDE MODAL
+// ═══════════════════════════════════════════════════
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) overlay.classList.remove('active');
+  });
+});
+
+// ═══════════════════════════════════════════════════
+// DEMO MODE — Auto-enter if no Firebase configured
+// ═══════════════════════════════════════════════════
+if (CONFIG.FIREBASE.apiKey === 'YOUR_FIREBASE_API_KEY') {
+  // Demo mode — bypass auth with mock user
+  setTimeout(() => {
+    state.user = {
+      uid: 'demo_user',
+      email: 'demo@stanford.edu',
+      name: 'Demo User',
+      photo: null,
+      school: 'Stanford University',
+    };
+    enterApp();
+  }, 300);
+}
+</script>
+</body>
+</html>
