@@ -1,8 +1,1 @@
-# Claude Code remains the default
-npx -y @aidesigner/agent-skills init
 
-# Configure a project host
-npx -y @aidesigner/agent-skills init cursor
-
-# Or configure Codex for just this repo
-npx -y @aidesigner/agent-skills init codex --trust-project
